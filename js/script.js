@@ -23,10 +23,14 @@
 			preloader: $(".preloader"),
 			wow: $( ".wow" ),
 			isotope: $( ".isotope" ),
+			customToggle: $( "[data-custom-toggle]" ),
 			rdNavbar: $(".rd-navbar"),
 			rdMailForm: $(".rd-mailform"),
 			rdInputLabel: $(".form-label"),
 			regula: $("[data-constraints]"),
+			lightGallery: $( '[data-lightgallery="group"]' ),
+			lightGalleryItem: $( '[data-lightgallery="item"]' ),
+			lightDynamicGalleryItem: $( '[data-lightgallery="dynamic"]' ),
 			wow: $(".wow")
 		};
 
@@ -364,6 +368,82 @@
 				iso.isotope( isotopeAttrs );
 			} ).eq( 0 ).trigger( "click" )
 		}
+		
+		// Custom Toggles
+		if ( plugins.customToggle.length ) {
+			for ( var i = 0; i < plugins.customToggle.length; i++ ) {
+				var $this = $( plugins.customToggle[ i ] );
+
+				$this.on( 'click', $.proxy( function ( event ) {
+					event.preventDefault();
+
+					var $ctx = $( this );
+					$( $ctx.attr( 'data-custom-toggle' ) ).add( this ).toggleClass( 'active' );
+				}, $this ) );
+
+				if ( $this.attr( "data-custom-toggle-hide-on-blur" ) === "true" ) {
+					$body.on( "click", $this, function ( e ) {
+						if ( e.target !== e.data[ 0 ]
+							&& $( e.data.attr( 'data-custom-toggle' ) ).find( $( e.target ) ).length
+							&& e.data.find( $( e.target ) ).length === 0 ) {
+							$( e.data.attr( 'data-custom-toggle' ) ).add( e.data[ 0 ] ).removeClass( 'active' );
+						}
+					} )
+				}
+
+				if ( $this.attr( "data-custom-toggle-disable-on-blur" ) === "true" ) {
+					$body.on( "click", $this, function ( e ) {
+						if ( e.target !== e.data[ 0 ] && $( e.data.attr( 'data-custom-toggle' ) ).find( $( e.target ) ).length === 0 && e.data.find( $( e.target ) ).length === 0 ) {
+							$( e.data.attr( 'data-custom-toggle' ) ).add( e.data[ 0 ] ).removeClass( 'active' );
+						}
+					} )
+				}
+			}
+		}
+		
+		// lightGallery
+		if (plugins.lightGallery.length) {
+			for (var i = 0; i < plugins.lightGallery.length; i++) {
+				initLightGallery(plugins.lightGallery[i]);
+			}
+		}
+		
+		// lightGallery item
+		if (plugins.lightGalleryItem.length) {
+			// Filter carousel items
+			var notCarouselItems = [];
+
+			for (var z = 0; z < plugins.lightGalleryItem.length; z++) {
+				if (!$(plugins.lightGalleryItem[z]).parents('.owl-carousel').length &&
+					!$(plugins.lightGalleryItem[z]).parents('.swiper-slider').length &&
+					!$(plugins.lightGalleryItem[z]).parents('.slick-slider').length) {
+					notCarouselItems.push(plugins.lightGalleryItem[z]);
+				}
+			}
+
+			plugins.lightGalleryItem = notCarouselItems;
+
+			for (var i = 0; i < plugins.lightGalleryItem.length; i++) {
+				initLightGalleryItem(plugins.lightGalleryItem[i]);
+			}
+		}
+		
+		// Dynamic lightGallery
+		if (plugins.lightDynamicGalleryItem.length) {
+			for (var i = 0; i < plugins.lightDynamicGalleryItem.length; i++) {
+				initDynamicLightGallery(plugins.lightDynamicGalleryItem[i]);
+			}
+		}
+
+		// Owl carousel
+		if ( plugins.owl.length ) {
+			for ( var i = 0; i < plugins.owl.length; i++ ) {
+				var c = $( plugins.owl[ i ] );
+				plugins.owl[ i ].owl = c;
+
+				initOwlCarousel( c );
+			}
+		}
 
 		// WOW
 		if ( $html.hasClass( "wow-animation" ) && plugins.wow.length && !isNoviBuilder && isDesktop ) {
@@ -536,3 +616,4 @@
 
 	});
 }());
+
