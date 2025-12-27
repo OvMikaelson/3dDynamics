@@ -28,9 +28,6 @@
 			rdMailForm: $(".rd-mailform"),
 			rdInputLabel: $(".form-label"),
 			regula: $("[data-constraints]"),
-			lightGallery: $( '[data-lightgallery="group"]' ),
-			lightGalleryItem: $( '[data-lightgallery="item"]' ),
-			lightDynamicGalleryItem: $( '[data-lightgallery="dynamic"]' ),
 			wow: $(".wow")
 		};
 
@@ -398,50 +395,6 @@
 						}
 					} )
 				}
-			}
-		}
-		
-		// lightGallery
-		if (plugins.lightGallery.length) {
-			for (var i = 0; i < plugins.lightGallery.length; i++) {
-				initLightGallery(plugins.lightGallery[i]);
-			}
-		}
-		
-		// lightGallery item
-		if (plugins.lightGalleryItem.length) {
-			// Filter carousel items
-			var notCarouselItems = [];
-
-			for (var z = 0; z < plugins.lightGalleryItem.length; z++) {
-				if (!$(plugins.lightGalleryItem[z]).parents('.owl-carousel').length &&
-					!$(plugins.lightGalleryItem[z]).parents('.swiper-slider').length &&
-					!$(plugins.lightGalleryItem[z]).parents('.slick-slider').length) {
-					notCarouselItems.push(plugins.lightGalleryItem[z]);
-				}
-			}
-
-			plugins.lightGalleryItem = notCarouselItems;
-
-			for (var i = 0; i < plugins.lightGalleryItem.length; i++) {
-				initLightGalleryItem(plugins.lightGalleryItem[i]);
-			}
-		}
-		
-		// Dynamic lightGallery
-		if (plugins.lightDynamicGalleryItem.length) {
-			for (var i = 0; i < plugins.lightDynamicGalleryItem.length; i++) {
-				initDynamicLightGallery(plugins.lightDynamicGalleryItem[i]);
-			}
-		}
-
-		// Owl carousel
-		if ( plugins.owl.length ) {
-			for ( var i = 0; i < plugins.owl.length; i++ ) {
-				var c = $( plugins.owl[ i ] );
-				plugins.owl[ i ].owl = c;
-
-				initOwlCarousel( c );
 			}
 		}
 
