@@ -8209,3 +8209,20 @@ h3 + .isotope-filters {
     position: relative;
     z-index: 2;
 }
+
+
+/* Featured Project */
+.featured-project-video {
+    width: 100%;
+    max-width: 1100px;
+    margin: 40px auto 0;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.featured-project-video video {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}

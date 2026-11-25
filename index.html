@@ -204,6 +204,32 @@
           </div>
         </div>
       </section>
+      <!-- Projet Vedette -->
+      <section class="section section-lg bg-gray-1" id="projet-vedette">
+        <div class="container">
+
+          <div class="row justify-content-center text-center">
+            <div class="col-md-9 col-lg-8">
+              <h3 class="wow fadeInDown">Projet Vedette</h3>
+              <h4 class="text-opacity-70 wow fadeInUp">
+                Testeur de câbles 128 points (avec boutons de lecture)
+              </h4>
+            </div>
+          </div>
+          <div class="featured-project-video wow fadeInUp">
+            <video
+              id="featured-project-video"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              aria-label="Démonstration du testeur de câbles 128 points">
+              <source src="images/2-testeur-128-points-demo.mp4" type="video/mp4">
+            </video>
+          </div>
+        </div>
+      </section>
       <!-- Latest Projects-->
       <section class="section section-sm section-fluid bg-default text-center" id="projects">
         <div class="container-fluid">
@@ -357,6 +383,35 @@
     <div class="snackbars" id="form-output-global"></div>
     <script src="js/core.min.js"></script>
     <script src="js/script.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const video = document.getElementById("featured-project-video");
+
+        if (!video) return;
+
+        const desktopVideo = "images/2-testeur-128-points-demo.mp4";
+        const mobileVideo = "images/3-testeur-128-points-ecran-mobile.mp4";
+
+        const mobileQuery = window.matchMedia("(max-width: 767px)");
+
+        function updateFeaturedVideo() {
+            const videoSource = mobileQuery.matches ? mobileVideo : desktopVideo;
+
+            if (video.getAttribute("src") === videoSource) return;
+
+            video.setAttribute("src", videoSource);
+            video.load();
+
+            video.play().catch(function () {
+                // Autoplay may be blocked by the browser.
+            });
+        }
+
+        updateFeaturedVideo();
+
+        mobileQuery.addEventListener("change", updateFeaturedVideo);
+    });
+    </script>
     <!-- coded by ragnar-->
   </body>
 </html>
